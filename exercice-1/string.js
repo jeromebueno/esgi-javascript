@@ -16,10 +16,19 @@ function capitalize(value) {
 }
 
 function camelCase(value) {
-    return typeof value == 'string' ? capitalize(value).split(" ").toString().replace(/,/g, ""):"";
+    if (typeof value != 'string') {
+        return ""
+    }
+
+    result = ""
+    string = value.split(" ")
+    for (var i = 0; i < string.length; i++) {
+        result += ucfirst(string[i])[0] + string[i].slice(1).toLowerCase()
+    }
+    return result
 }
 
-function snakeCase(value){
+function snake_case(value){
     return typeof value == 'string' ? capitalize(value).replace(/ /g, "_"):"";
 }
 
@@ -35,4 +44,42 @@ function leet(value){
     return result.toString().replace(/,/g, "")
 }
 
-console.log(snakeCase("test de phrase"))
+function prop_access(obj,property){
+    if(property === "" || property === undefined){
+     return obj
+    }
+
+    prop = property.split('.')
+    for (var i = 0; i < prop.length; i++) {
+            if (obj[prop[i]] !== undefined){
+                obj = obj[prop[i]]
+            }
+            else{
+                return prop.join('.')+' n\'existe pas'
+            }
+    }
+    return obj
+}
+
+
+function verlan(value){
+    return value.split("").reverse().join("");
+}
+
+/*
+testObject ={
+    "animals":[
+        {
+            "type":{
+                "name": "dog"
+            }
+        },
+        {
+            "type":{
+                "name": "cat"
+            }
+        }
+    ]
+}
+
+console.log(prop_access(testObject,'animals.1.type.name'))*/
